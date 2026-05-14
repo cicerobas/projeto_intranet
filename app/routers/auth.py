@@ -2,7 +2,7 @@ from fastapi import APIRouter, Request, Response
 from fastapi.responses import HTMLResponse
 
 from app.core.dependencies import FormDataDep, SessionDep
-from app.core.security import create_token
+from app.core.security import create_access_token
 from app.core.utils import templates
 from app.services import auth as auth_service
 
@@ -21,7 +21,7 @@ async def get_access_token(
             '<p id="erro" style="color:red">Usuário ou Senha incorretos</p>'
         )
 
-    access_token = create_token({"sub": str(user.id), "roles": user.roles})
+    access_token = create_access_token({"sub": str(user.id), "roles": user.roles})
 
     response.set_cookie(
         key="access_token",
@@ -37,7 +37,9 @@ async def get_access_token(
 
 @router.get("/login", response_class=HTMLResponse)
 async def login_page(request: Request):
-    return templates.TemplateResponse(request=request, name="login.html")
+    return templates.TemplateResponse(
+        request=request, name="login.html", context={"login": True}
+    )
 
 
 @router.post("/logout")
