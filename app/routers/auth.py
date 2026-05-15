@@ -21,7 +21,7 @@ async def get_access_token(
             '<p id="erro" class="has-text-danger">Usuário ou Senha incorretos</p>'
         )
 
-    access_token = create_access_token({"sub": str(user.id), "roles": user.roles})
+    access_token = create_access_token({"sub": str(user.id)})
 
     response.set_cookie(
         key="access_token",

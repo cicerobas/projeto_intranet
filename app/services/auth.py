@@ -1,6 +1,6 @@
 from typing import Annotated
 
-from fastapi import Cookie
+from fastapi import Cookie, Depends, HTTPException, status
 from sqlmodel import Session
 
 from app.core.dependencies import SessionDep
@@ -30,3 +30,17 @@ async def get_current_user(
         return None
 
     return session.get(User, payload.get("sub"))
+
+
+def require_roles(*roles: str):
+    def dependency(current_user: User = Depends(get_current_user)):
+        if not current_user:
+            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED)
+
+        user_roles = {role.name for role in current_user.roles}
+        if not user_roles.intersection(roles):
+            raise HTTPException(status_code=status.HTTP_403_FORBIDDEN)
+
+        return current_user
+
+    return dependency

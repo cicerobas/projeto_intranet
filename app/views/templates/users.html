@@ -1,0 +1,121 @@
+{% extends "base.html" %} {% block content %}
+<div class="container mt-5">
+  <button class="button is-success" id="btn-novo-usuario">
+    <span class="icon"><i class="fas fa-user-plus"></i></span>
+    <span>Novo Usuário</span>
+  </button>
+</div>
+
+<!-- Modal -->
+<div class="modal" id="modal-usuario">
+  <div class="modal-background"></div>
+  <div class="modal-card">
+    <header class="modal-card-head">
+      <p class="modal-card-title">Cadastrar Novo Usuário</p>
+      <button class="delete" aria-label="close" id="btn-fechar-modal"></button>
+    </header>
+
+    <section class="modal-card-body">
+      <form id="form-usuario">
+        <div class="field">
+          <label class="label">Nome</label>
+          <div class="control">
+            <input
+              class="input"
+              type="text"
+              name="nome"
+              placeholder="Ex: Maria Souza"
+              required
+            />
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label">Usuário</label>
+          <div class="control has-icons-left">
+            <input
+              class="input"
+              type="text"
+              name="usuario"
+              placeholder="maria.souza"
+              required
+            />
+            <span class="icon is-small is-left"
+              ><i class="fas fa-user"></i
+            ></span>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label">Senha</label>
+          <div class="control has-icons-left">
+            <input
+              class="input"
+              type="password"
+              name="senha"
+              placeholder="********"
+              required
+            />
+            <span class="icon is-small is-left"
+              ><i class="fas fa-lock"></i
+            ></span>
+          </div>
+        </div>
+
+        <div class="field mt-4">
+          <label class="label">Roles (Permissões)</label>
+          <div class="control">
+            <!-- Opção Estática -->
+            <label class="checkbox mr-3">
+              <input type="checkbox" name="roles" value="admin" />
+              Admin
+            </label>
+            <label class="checkbox mr-3">
+              <input type="checkbox" name="roles" value="editor" />
+              Editor
+            </label>
+            <label class="checkbox">
+              <input type="checkbox" name="roles" value="viewer" checked />
+              Visualizador
+            </label>
+
+            <!--
+            {% for role in roles_disponiveis %}
+              <label class="checkbox mr-3">
+                <input type="checkbox" name="roles" value="{{ role.id }}">
+                {{ role.nome }}
+              </label>
+            {% endfor %}
+            -->
+          </div>
+        </div>
+      </form>
+    </section>
+
+    <footer class="modal-card-foot is-justify-content-flex-end">
+      <button class="button" id="btn-cancelar">Cancelar</button>
+      <button type="submit" form="form-usuario" class="button is-success">
+        Salvar
+      </button>
+    </footer>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const modal = document.getElementById("modal-usuario");
+    const triggers = [
+      document.getElementById("btn-novo-usuario"),
+      document.getElementById("btn-fechar-modal"),
+      document.getElementById("btn-cancelar"),
+    ];
+
+    triggers.forEach((btn) => {
+      if (btn)
+        btn.addEventListener("click", () =>
+          modal.classList.toggle("is-active"),
+        );
+    });
+  });
+</script>
+{% endblock %}
