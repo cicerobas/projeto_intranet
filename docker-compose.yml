@@ -1,12 +1,18 @@
 services:
   api:
     build: .
+    # Sobrescreve o comando do Dockerfile para focar em desenvolvimento com hot-reload
+    command:
+      ["fastapi", "dev", "app/main.py", "--host", "0.0.0.0", "--port", "8000"]
     volumes:
       - .:/app
+      # Volume anônimo para proteger o ambiente virtual do contêiner
+      - /app/.venv
     ports:
       - "8000:8000"
     env_file:
       - .env
+    restart: unless-stopped
     depends_on:
       db:
         condition: service_healthy
@@ -21,6 +27,7 @@ services:
       - "5433:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
       interval: 5s
