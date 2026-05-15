@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="pt-br">
+<html lang="pt-br" class="has-background-light has-navbar-fixed-top">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -15,36 +15,7 @@
     <script src="{{ url_for('static', path='/htmx.min.js') }}"></script>
   </head>
   <body>
-    <nav class="navbar is-dark" role="navigation" aria-label="main navigation">
-      <div class="navbar-brand">
-        <a href="/" class="navbar-item">
-          <img
-            src="{{ url_for('static', path='/images/intranet-logo.svg') }}"
-            alt="Logo Intranet"
-          />
-        </a>
-      </div>
-      <div class="navbar-end">
-        <div class="navbar-item">
-          {% if user %}
-          <span class="is-size-5 has-text-white">{{ user.name }}</span>
-          <a hx-post="/auth/logout" class="button is-dark is-light">
-            <span class="icon">
-              <i class="fa-solid fa-right-from-bracket"></i>
-            </span>
-            <span>Sair</span>
-          </a>
-          {% elif not login %}
-          <a href="/auth/login" class="button is-dark is-light">
-            <span class="icon">
-              <i class="fa-solid fa-right-to-bracket"></i>
-            </span>
-            <span>Entrar</span>
-          </a>
-          {% endif %}
-        </div>
-      </div>
-    </nav>
-    <main>{% block content %}{% endblock %}</main>
+    {% include 'fragments/navbar.html' %}
+    <main class="container">{% block content %}{% endblock %}</main>
   </body>
 </html>

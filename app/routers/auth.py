@@ -18,7 +18,7 @@ async def get_access_token(
     )
     if not user:
         return HTMLResponse(
-            '<p id="erro" style="color:red">Usuário ou Senha incorretos</p>'
+            '<p id="erro" class="has-text-danger">Usuário ou Senha incorretos</p>'
         )
 
     access_token = create_access_token({"sub": str(user.id), "roles": user.roles})

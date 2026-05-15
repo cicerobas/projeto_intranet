@@ -1,9 +1,44 @@
 {% extends "base.html" %} {% block content %}
-<h2>Login</h2>
-<form hx-post="/auth/token" hx-target="#erro" hx-swap="outerHTML">
-  <p id="erro"></p>
-  <input type="text" name="username" placeholder="Usuário..." />
-  <input type="password" name="password" placeholder="Senha..." />
-  <button type="submit">Entrar</button>
-</form>
+<section class="hero is-fullheight">
+  <div class="hero-body">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-5-tablet is-4-desktop is-5-widescreen">
+          <form
+            class="box"
+            hx-post="/auth/token"
+            hx-target="#erro"
+            hx-swap="outerHTML"
+          >
+            <div class="field">
+              <label for="username" class="label">Usuário</label>
+              <div class="control has-icons-left">
+                <input class="input" type="text" name="username" required />
+                <span class="icon is-small is-left">
+                  <i class="fas fa-user"></i>
+                </span>
+              </div>
+            </div>
+            <div class="field">
+              <label for="password" class="label">Senha</label>
+              <div class="control has-icons-left">
+                <input class="input" type="password" name="password" required />
+                <span class="icon is-small is-left">
+                  <i class="fas fa-lock"></i>
+                </span>
+              </div>
+            </div>
+            <div class="has-text-centered has-text-weight-medium">
+              <p id="erro"></p>
+            </div>
+
+            <button class="button is-primary is-fullwidth" type="submit">
+              ENTRAR
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 {% endblock %}
