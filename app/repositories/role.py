@@ -5,3 +5,7 @@ from app.models.role import Role
 
 def get_role(session: Session, name: str) -> Role | None:
     return session.exec(select(Role).where(Role.name == name)).one_or_none()
+
+
+def get_all_roles(session: Session) -> list:
+    return session.exec(select(Role)).all()

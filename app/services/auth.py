@@ -44,3 +44,9 @@ def require_roles(*roles: str):
         return current_user
 
     return dependency
+
+
+def get_user_roles(current_user: User | None) -> list:
+    if not current_user:
+        return []
+    return [role.name for role in current_user.roles]

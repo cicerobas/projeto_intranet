@@ -1,0 +1,73 @@
+<aside class="app-sidebar has-background-dark is-flex is-flex-direction-column">
+  <div class="mb-5">
+    <a href="/">
+      <img
+        src="{{ url_for('static', path='/images/intranet-logo.svg') }}"
+        alt="Logo Intranet"
+      />
+    </a>
+  </div>
+  <div class="menu">
+    <p class="menu-label has-text-grey-light">Geral</p>
+    <ul class="menu-list">
+      <li>
+        <a
+          href="/"
+          class="{% if request.scope['route'].name == 'index' %}is-active{% endif %}"
+          >Home</a
+        >
+      </li>
+    </ul>
+    {% if "admin" in user_roles %}
+    <p class="menu-label has-text-grey-light">Gerenciar</p>
+    <ul class="menu-list">
+      <li>
+        <a
+          href="/users/"
+          class="{% if request.scope['route'].name == 'users' %}is-active{% endif %}"
+          >Usuários</a
+        >
+      </li>
+      <li>
+        <a
+          href="/roles/"
+          class="{% if request.scope['route'].name == 'roles' %}is-active{% endif %}"
+          >Funções</a
+        >
+      </li>
+    </ul>
+    {% endif %}
+  </div>
+
+  <div class="menu mt-auto">
+    <p class="menu-label has-text-grey-light mb-2 mt-1">Usuário</p>
+
+    <div
+      class="is-flex is-align-items-center has-text-white mb-3"
+      style="overflow: hidden"
+    >
+      <span class="icon mr-2">
+        <i class="fa-solid fa-user"></i>
+      </span>
+      <span class="has-text-weight-medium" id="username">
+        {% if user %} {{ user.name }} {% else %} Visitante {% endif %}
+      </span>
+    </div>
+
+    {% if user %}
+    <a hx-post="/auth/logout" class="button is-fullwidth is-danger is-outlined">
+      <span class="icon">
+        <i class="fa-solid fa-right-from-bracket"></i>
+      </span>
+      <span>Sair</span>
+    </a>
+    {% else %}
+    <a href="/auth/login" class="button is-fullwidth is-success is-outlined">
+      <span class="icon">
+        <i class="fa-solid fa-right-to-bracket"></i>
+      </span>
+      <span>Entrar</span>
+    </a>
+    {% endif %}
+  </div>
+</aside>

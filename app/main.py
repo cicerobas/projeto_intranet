@@ -6,7 +6,7 @@ from fastapi.staticfiles import StaticFiles
 
 from app.core.database import create_db_and_tables, create_default_admin
 from app.core.utils import templates
-from app.routers import auth, user
+from app.routers import auth, user, role
 from app.services.auth import get_current_user
 
 
@@ -22,6 +22,7 @@ app.mount("/static", StaticFiles(directory="app/views/static"), name="static")
 
 app.include_router(auth.router)
 app.include_router(user.router)
+app.include_router(role.router)
 
 
 @app.exception_handler(HTTPException)
@@ -42,7 +43,7 @@ async def http_exception_handler(request: Request, exc: HTTPException):
     )
 
 
-@app.get("/", response_class=HTMLResponse)
+@app.get("/", response_class=HTMLResponse, name="index")
 def index(request: Request, current_user=Depends(get_current_user)):
     return templates.TemplateResponse(
         request=request,
@@ -54,8 +55,3 @@ def index(request: Request, current_user=Depends(get_current_user)):
             else [],
         },
     )
-
-
-@app.get("/teste", response_class=HTMLResponse)
-def teste(request: Request):
-    return templates.TemplateResponse(request=request, name="teste.html")
